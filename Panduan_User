@@ -1,0 +1,45 @@
+Panduan Singkat Sistem Inventaris
+Cara Mulai
+Buka aplikasi dan login menggunakan akun:
+Email: user@example.com
+Password: password
+Fitur Utama
+1. Mengelola Barang
+Lihat daftar barang: Klik menu "Barang"
+Tambah barang baru:
+Klik tombol "Tambah Barang"
+Isi informasi seperti:
+Kode barang (contoh: BRG001)
+Nama barang
+Kategori
+Lokasi
+Stok
+Harga
+Satuan
+2. Mencatat Mutasi (Perpindahan) Barang
+Untuk mencatat barang masuk/keluar:
+Klik menu "Mutasi"
+Pilih "Tambah Mutasi"
+Isi detail:
+Pilih barang
+Tanggal
+Jenis (masuk/keluar)
+Jumlah
+Keterangan
+3. Melihat Riwayat
+Riwayat barang: Klik barang → tab "Riwayat"
+Riwayat mutasi: Menu "Mutasi"
+4. Pencarian & Filter
+Gunakan kotak pencarian untuk mencari barang
+Gunakan filter untuk menyaring berdasarkan:
+Kategori
+Lokasi
+Status
+Tips
+Selalu cek stok sebelum membuat mutasi
+Gunakan keterangan yang jelas saat membuat mutasi
+Periksa riwayat mutasi secara berkala
+Pastikan kode barang tidak duplikat
+Butuh Bantuan?
+Jika ada masalah atau pertanyaan, hubungi admin di:
+msaifulrizal027@gmail.com
