@@ -1,0 +1,220 @@
+# Inventory Management System API
+
+Sistem manajemen inventory dengan fitur tracking mutasi barang menggunakan Laravel 10.
+
+## Requirements
+
+- PHP >= 8.1
+- Composer
+- MySQL/MariaDB
+- Node.js & NPM
+- Git
+
+## Installation
+
+1. Clone repository
+```bash
+git clone https://psychopath-people/projek_gudang.git
+cd inventory-system
+```
+
+2. Install dependencies
+```bash
+composer install
+npm install
+```
+
+3. Setup environment file
+```bash
+cp .env.example .env
+```
+
+4. Configure your .env file
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventory_db
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+5. Generate application key
+```bash
+php artisan key:generate
+```
+
+6. Run database migrations and seeders
+```bash
+php artisan migrate --seed
+```
+
+7. Create storage link
+```bash
+php artisan storage:link
+```
+
+8. Run the development server
+```bash
+php artisan serve
+```
+
+## Docker Installation
+
+1. Build and run containers
+```bash
+docker-compose up -d
+```
+
+2. Install dependencies inside container
+```bash
+docker-compose exec app composer install
+docker-compose exec app php artisan key:generate
+docker-compose exec app php artisan migrate --seed
+```
+
+## API Documentation
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com)
+
+### Authentication
+
+All API endpoints are protected with Bearer Token Authentication.
+
+1. Login to get token:
+```http
+POST /api/v1/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "password"
+}
+```
+
+2. Use the token in subsequent requests:
+```http
+Authorization: Bearer your-token-here
+```
+
+### Available Endpoints
+
+#### Authentication
+- `POST /api/v1/login` - Login user
+- `POST /api/v1/logout` - Logout user
+- `GET /api/v1/user/profile` - Get user profile
+
+#### Barang (Items)
+- `GET /api/v1/barang` - Get all items
+- `POST /api/v1/barang` - Create new item
+- `GET /api/v1/barang/{id}` - Get item detail
+- `PUT /api/v1/barang/{id}` - Update item
+- `DELETE /api/v1/barang/{id}` - Delete item
+- `GET /api/v1/barang/{id}/history` - Get item mutation history
+
+#### Mutasi (Mutations)
+- `GET /api/v1/mutasi` - Get all mutations
+- `POST /api/v1/mutasi` - Create new mutation
+- `GET /api/v1/mutasi/{id}` - Get mutation detail
+
+#### Users
+- `GET /api/v1/user/{id}/history` - Get user mutation history
+
+### Example Requests
+
+1. Create New Item
+```http
+POST /api/v1/barang
+Content-Type: application/json
+Authorization: Bearer your-token-here
+
+{
+    "kode": "BRG001",
+    "nama_barang": "Laptop",
+    "kategori": "Electronics",
+    "lokasi": "Warehouse A",
+    "stok": 10,
+    "harga": 15000000,
+    "satuan": "unit",
+    "status": "aktif"
+}
+```
+
+2. Create Mutation
+```http
+POST /api/v1/mutasi
+Content-Type: application/json
+Authorization: Bearer your-token-here
+
+{
+    "barang_id": 1,
+    "tanggal": "2024-03-11",
+    "jenis_mutasi": "masuk",
+    "jumlah": 5,
+    "keterangan": "Restock from supplier"
+}
+```
+
+## Default Users
+
+```
+Admin:
+Email: admin@example.com
+Password: password
+
+User:
+Email: user@example.com
+Password: password
+```
+
+## Features
+
+- REST API with Bearer Token Authentication
+- CRUD Operations for Items
+- Stock Mutation Tracking
+- User Activity History
+- Filter and Search Capabilities
+- Export to Excel/PDF
+- Docker Support
+
+## Database Structure
+
+### Tables
+- users
+- barangs
+- mutasis
+
+### Relationships
+- Mutasi belongs to Barang
+- Mutasi belongs to User
+- Barang has many Mutasi
+- User has many Mutasi
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Testing
+
+Run the test suite:
+```bash
+php artisan test
+```
+
+## Deployment
+
+1. Set production environment variables
+2. Build and run Docker containers
+```bash
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+## Contact
+
+M Saiful Rizal - [@zankzoss_](https://instagram.com/izank_zoss) - msaifulrizal027@gmail.com
+
+Project Link: [https://github.com/yourusername/inventory-system](https://github.com/yourusername/projek)
