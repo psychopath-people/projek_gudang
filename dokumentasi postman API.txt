@@ -1,0 +1,278 @@
+# Dokumentasi API Inventory System
+
+## Base URL
+```
+http://127.0.0.1:8000/api
+```
+
+## Authentication Endpoints
+
+### 1. Login
+```http
+POST /login
+
+Request Body:
+{
+    "email": "admin@example.com",
+    "password": "admin123"
+}
+
+Response Success: (200)
+{
+    "status": true,
+    "message": "Login Berhasil",
+    "data": {
+        "user": {
+            "id": 1,
+            "name": "Administrator",
+            "email": "admin@example.com",
+            "level": "admin"
+        },
+        "token": "1|abcdef..."
+    }
+}
+
+Response Error: (401)
+{
+    "status": false,
+    "message": "Email atau Password salah"
+}
+```
+
+### 2. Logout
+```http
+POST /logout
+Headers:
+Authorization: Bearer {token}
+
+Response Success: (200)
+{
+    "status": true,
+    "message": "Logout Berhasil"
+}
+```
+
+### 3. Get User Profile
+```http
+GET /profile
+Headers:
+Authorization: Bearer {token}
+
+Response:
+{
+    "status": true,
+    "message": "Profile data",
+    "data": {
+        "id": 1,
+        "name": "Administrator",
+        "email": "admin@example.com",
+        "level": "admin"
+    }
+}
+```
+
+## Barang Endpoints
+
+### 1. Get All Barang
+```http
+GET /barang
+Headers:
+Authorization: Bearer {token}
+
+Query Parameters:
+?search=laptop    // Search by name or code
+?page=1          // Pagination
+?per_page=10     // Items per page
+
+Response:
+{
+    "status": true,
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 1,
+                "kode": "BRG001",
+                "nama_barang": "Laptop Asus",
+                "kategori": "Elektronik",
+                "stok": 10,
+                "harga": 8000000,
+                ...
+            }
+        ],
+        "total": 20
+    }
+}
+```
+
+### 2. Create Barang
+```http
+POST /barang
+Headers:
+Authorization: Bearer {token}
+Content-Type: multipart/form-data
+
+Body:
+{
+    "kode": "BRG001",
+    "nama_barang": "Laptop Asus",
+    "kategori": "Elektronik",
+    "lokasi": "Rak-A1",
+    "stok": 10,
+    "harga": 8000000,
+    "satuan": "unit",
+    "foto": [file]
+}
+
+Response: (201)
+{
+    "status": true,
+    "message": "Barang berhasil ditambahkan",
+    "data": {
+        "id": 1,
+        "kode": "BRG001",
+        ...
+    }
+}
+```
+
+### 3. Update Barang
+```http
+PUT /barang/{id}
+Headers:
+Authorization: Bearer {token}
+
+Body:
+{
+    "nama_barang": "Laptop Asus ROG",
+    "stok": 15,
+    ...
+}
+
+Response:
+{
+    "status": true,
+    "message": "Barang berhasil diupdate",
+    "data": {...}
+}
+```
+
+### 4. Delete Barang
+```http
+DELETE /barang/{id}
+Headers:
+Authorization: Bearer {token}
+
+Response:
+{
+    "status": true,
+    "message": "Barang berhasil dihapus"
+}
+```
+
+## Mutasi Endpoints
+
+### 1. Get All Mutasi
+```http
+GET /mutasi
+Headers:
+Authorization: Bearer {token}
+
+Query Parameters:
+?start_date=2024-03-01
+?end_date=2024-03-31
+?jenis_mutasi=masuk
+?barang_id=1
+
+Response:
+{
+    "status": true,
+    "data": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 1,
+                "tanggal": "2024-03-11",
+                "jenis_mutasi": "masuk",
+                "jumlah": 5,
+                "barang": {...},
+                "user": {...}
+            }
+        ]
+    }
+}
+```
+
+### 2. Create Mutasi
+```http
+POST /mutasi
+Headers:
+Authorization: Bearer {token}
+
+Body:
+{
+    "barang_id": 1,
+    "tanggal": "2024-03-11",
+    "jenis_mutasi": "masuk",
+    "jumlah": 5,
+    "keterangan": "Restock from supplier"
+}
+
+Response: (201)
+{
+    "status": true,
+    "message": "Mutasi berhasil dicatat",
+    "data": {...}
+}
+```
+
+### 3. Get Mutasi History by Barang
+```http
+GET /barang/{id}/history
+Headers:
+Authorization: Bearer {token}
+
+Response:
+{
+    "status": true,
+    "data": {
+        "barang": {...},
+        "mutasis": [...],
+        "summary": {
+            "total_masuk": 100,
+            "total_keluar": 50,
+            "stok_saat_ini": 50
+        }
+    }
+}
+```
+
+### 4. Get Mutasi History by User
+```http
+GET /user/{id}/history
+Headers:
+Authorization: Bearer {token}
+
+Response:
+{
+    "status": true,
+    "data": {
+        "user": {...},
+        "mutasis": [...],
+        "summary": {
+            "total_transaksi": 20,
+            "total_masuk": 100,
+            "total_keluar": 50
+        }
+    }
+}
+```
+
+## Error Responses
+
+### 401 Unauthorized
+```json
+{
+    "status": false,
+    "message": "Unauthenticated"
+}
