@@ -18,7 +18,7 @@ services:
             - DB_CONNECTION=mysql
             - DB_HOST=127.0.0.1
             - DB_PORT=3306
-            - DB_DATABASE=projek_gudag
+            - DB_DATABASE=projek_gudang
             - DB_USERNAME=root
             - DB_PASSWORD=${DB_PASSWORD} #
     depends_on:
